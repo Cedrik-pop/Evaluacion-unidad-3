@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
 
   String get _baseUrl {
+    // IMPORTANTE: Si usas Android Emulator es 10.0.2.2, si es Web es 127.0.0.1
     if (kIsWeb) return 'http://127.0.0.1:8000';
     return 'http://10.0.2.2:8000';
   }
@@ -33,12 +34,19 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      final url = Uri.parse('$_baseUrl/login/');
+      // CORRECCIÓN CRÍTICA:
+      // Quitamos la barra '/' del final. Debe ser "/login" y no "/login/"
+      final url = Uri.parse('$_baseUrl/login'); 
+
+      print("🔵 Intentando conectar a: $url");
+
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"username": username, "password": password}),
       );
+
+      print("🟢 Respuesta: ${response.statusCode}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -51,10 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       } else {
-        _showSnack("Credenciales incorrectas");
+        _showSnack("Credenciales incorrectas o error de servidor (${response.statusCode})");
       }
     } catch (e) {
-      _showSnack("Error de conexión con el servidor");
+      print("🔴 Error: $e");
+      _showSnack("Error de conexión. Revisa la consola.");
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -74,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // ICONO ORIGINAL
               const Icon(
                 Icons.local_shipping_rounded,
                 size: 80,
