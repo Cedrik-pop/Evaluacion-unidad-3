@@ -1,4 +1,4 @@
-Paquexpress App 📦
+Paquexpress
 
 Aplicación móvil desarrollada en Flutter con backend en FastAPI (Python) y base de datos MySQL, diseñada para la gestión logística de entregas de última milla.
 
@@ -31,12 +31,37 @@ SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@localhost/paquexpress_db"
 
 2. Ejecutar el Backend (API)
 
-Desde la terminal, navega a la carpeta del backend:
+El backend ahora se encuentra organizado en su propia carpeta con un entorno virtual configurado.
 
-# 1. Instalar dependencias
-pip install fastapi uvicorn sqlalchemy pymysql python-multipart aiofiles passlib[bcrypt] pydantic
+Desde la terminal (CMD o PowerShell):
 
-# 2. Iniciar el servidor
+Navegar a la carpeta de la API:
+Entra al directorio donde guardaste los archivos de Python (main.py, etc.).
+
+cd nombre_de_tu_carpeta_api
+
+
+Crear el entorno virtual (Solo la primera vez):
+Ejecuta el siguiente comando para crear la carpeta env que contendrá las librerías aisladas.
+
+python -m venv env
+
+
+Activar el entorno virtual:
+Ejecuta el script de activación. Verás que tu terminal muestra (env) al inicio.
+
+.\env\Scripts\activate
+
+
+Instalar dependencias (Solo si es la primera vez):
+Asegúrate de que las librerías necesarias estén instaladas en el entorno.
+
+pip install fastapi uvicorn sqlalchemy pymysql cryptography python-multipart aiofiles passlib[bcrypt] pydantic
+
+
+Iniciar el servidor:
+Una vez activado el entorno, ejecuta:
+
 python main.py
 # O alternativamente: uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
@@ -54,7 +79,7 @@ flutter pub get
 flutter run
 
 
-📱 Guía de Uso
+Guía de Uso
 
 Crear Usuario (Primer Uso):
 
@@ -83,7 +108,7 @@ Verifica tu ubicación en el mapa.
 
 Toma una foto de evidencia y presiona "Confirmar Entrega".
 
-⚠️ Notas Importantes para Pruebas
+Notas Importantes para Pruebas
 
 Emulador Android: La app está configurada para conectarse a http://10.0.2.2:8000 automáticamente.
 
@@ -91,5 +116,5 @@ Web / iOS: La app se conecta a http://127.0.0.1:8000.
 
 Si pruebas en un dispositivo físico, debes cambiar la IP en el código de Flutter por la IP local de tu computadora (ej. 192.168.1.X).
 
-Desarrollado por: [Tu Nombre]
+Desarrollado por: Cedrik
 Materia: Desarrollo de Aplicaciones Móviles
